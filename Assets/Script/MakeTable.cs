@@ -16,19 +16,20 @@ public class MakeTable : MonoBehaviour
     public bool isGame = false;
     bool isFirst = true;
 
-    // Start is called before the first frame update
     void Start()
     {
         Pane = new GameObject[90];
     }
 
-    // Update is called once per frame
     void Update()
     {
+        //ゲーム開始処理
         if(isFirst)
         {
             isGame = true;
             isFirst = false;
+
+            //盤面作成
             for(int i = 0; i < 90; i++)
             {
                 Pane[i] = Instantiate(PrePane,parent);
@@ -68,6 +69,7 @@ public class MakeTable : MonoBehaviour
                 Pane[i].transform.position = parent.TransformPoint(new Vector3(-425 + i % 18 * 50, 110 - i / 18 * 50, 0));
                 }
 
+                //結合する元素を設置可能に
                 if(i + 1 == 8 || i + 1 == 9 || i + 1 == 16 || i + 1 == 17 || i + 1 == 61)
                 {
                     Pane[i].GetComponent<AtomIndex>().canPut = true;
@@ -87,27 +89,27 @@ public class MakeTable : MonoBehaviour
         SC[1].wasFinished = !isGame;
     }
 
+    //コンボ判定
     public bool isCombo(int num)
     {
-        bool ret = false;
         switch(num)
         {
             case 1:
                 if(Pane[5].GetComponent<AtomIndex>().isPutted && Pane[7].GetComponent<AtomIndex>().isPutted)
                 {
-                    ret =  true;
                     print("CH3ReO3");
+                    return  true;
                 }
                 break;
             case 6:
                 if(Pane[7].GetComponent<AtomIndex>().isPutted)
                 {
-                    ret = true;
                     print("Re2(CO)10");
                     if(Pane[0].GetComponent<AtomIndex>().isPutted)
                     {
                         print("CH3ReO3");
                     }
+                    return true;
                 }
                 break;
             case 8:
@@ -124,43 +126,38 @@ public class MakeTable : MonoBehaviour
                 {
                     print("Ba(ReO4)2");
                 }
-                ret = true;
-                break;
+                return true;
             case 9:
                 print("ReF6");
-                ret = true;
-                break;
+                return true;
             case 16:
                 print("ReS2");
-                ret = true;
-                break;
+                return true;
             case 17:
                 print("Re2Cl10");
-                ret = true;
-                break;
+                return true;
             case 19:
                 if(Pane[65].GetComponent<AtomIndex>().isPutted)
                 {
                     print("K2ReHg");
-                    ret = true;
+                    return true;
                 }
                 break;
             case 56:
                 if(Pane[7].GetComponent<AtomIndex>().isPutted)
                 {
                     print("Ba(ReO4)2");
-                    ret = true;
+                    return true;
                 }
                 break;
             case 66:
                 if(Pane[18].GetComponent<AtomIndex>().isPutted)
                 {
                     print("K2ReHg");
-                    ret = true;
+                    return true;
                 }
                 break;
         }
-
-        return ret;
+        return false;
     }
 }

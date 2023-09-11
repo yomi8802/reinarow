@@ -30,13 +30,12 @@ public class Pick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerEnter(PointerEventData eventdata)
     {
-        Vector3 exp;
-        Vector3 up;
-        exp = new Vector3(10, 10, 1);
+        Vector3 up; //カードポップアップ
         up = this.transform.position;
         up += new Vector3(0, 0, -1);
-        this.transform.localScale = exp;
         this.transform.position = up;
+
+        //カードをばあに出せるか
         if (MT.Pane[AI.num - 1].GetComponent<AtomIndex>().canPut)
         {
             MT.Pane[AI.num - 1].GetComponent<Renderer>().material.color = Color.yellow;
@@ -49,12 +48,9 @@ public class Pick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerExit(PointerEventData eventdata)
     {
-        Vector3 shr;
-        Vector3 down;
-        shr = new Vector3(10, 10, 1);
+        Vector3 down; //カード位置戻し
         down = this.transform.position;
         down -= new Vector3(0, 0, -1);
-        this.transform.localScale = shr;
         this.transform.position = down;
 
         MT.Pane[AI.num - 1].GetComponent<Renderer>().material.color = Color.white;
@@ -62,54 +58,64 @@ public class Pick : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!isOption)
+        //オプション画面を開いているとき無効
+        if (isOption)
         {
-            if (prog.myTurn)
+            return;
+        }
+
+        //自分のターンのとき
+        if (prog.myTurn)
+        {
+            //初手のとき
+            if (prog.isFirst)
             {
-                if (prog.isFirst)
+                //レニウムを選択したとき
+                if (AI.num == 61)
                 {
-                    if (AI.num == 61)
-                    {
-                        Action();
-                        prog.isFirst = false;
-                        prog.Turn(1);
-                    }
-                    else
-                    {
-                        print("場に出せません");
-                        Audio.PlayOneShot(err);
-                    }
+                    Action();
+                    prog.isFirst = false;
+                    prog.Turn(1);
                 }
                 else
                 {
-                    if (MT.Pane[AI.num - 1].GetComponent<AtomIndex>().canPut)
-                    {
-                        Action();
-                        if (MT.isCombo(AI.num))
-                        {
-                            prog.Turn(0);
-                            TMP.text = "あなたの連続ターン";
-                        }
-                        else
-                        {
-                            prog.Turn(1);
-                        }
-                    }
-                    else
-                    {
-                        print("場に出せません");
-                        Audio.PlayOneShot(err);
-                    }
+                    print("場に出せません");
+                    Audio.PlayOneShot(err);
                 }
             }
             else
             {
-                print("あなたのターンではありません");
-                Audio.PlayOneShot(err);
+                //選択したカードが場に出せるとき
+                if (MT.Pane[AI.num - 1].GetComponent<AtomIndex>().canPut)
+                {
+                    Action();
+
+                    //ターン継続時
+                    if (MT.isCombo(AI.num))
+                    {
+                        prog.Turn(0);
+                        TMP.text = "あなたの連続ターン";
+                    }
+                    else
+                    {
+                        prog.Turn(1);
+                    }
+                }
+                else
+                {
+                    print("場に出せません");
+                    Audio.PlayOneShot(err);
+                }
             }
+        }
+        else
+        {
+            print("あなたのターンではありません");
+            Audio.PlayOneShot(err);
         }
     }
 
+    //カード設置
     void Action()
     {
         HA.CardAli(this.gameObject);

@@ -11,6 +11,7 @@ public class PassButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public AudioClip Click;
     public AudioClip err;
 
+    //passボタン色設定
     public void OnPointerEnter(PointerEventData eventdata)
     {
         this.gameObject.GetComponent<Renderer>().material.color = Color.gray;
@@ -21,6 +22,7 @@ public class PassButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         this.gameObject.GetComponent<Renderer>().material.color = Color.white;
     }
 
+    //パス可能性判定
     public void OnPointerClick(PointerEventData eventdata)
     {
         if(prog.isFirst)

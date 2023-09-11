@@ -11,6 +11,7 @@ public class HandsNum : MonoBehaviour
     public int PlayerNum;
     public int CardNum = 0;
 
+    //プレイヤー残り枚数表示
     void Update()
     {
         if(MT.isGame)

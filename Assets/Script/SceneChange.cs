@@ -15,6 +15,7 @@ public class SceneChange : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public AudioSource Audio;
     public AudioClip Change;
 
+    //タイトルへ戻るボタンの挙動
     public void OnPointerEnter(PointerEventData eventdata)
     {
         if (isButton)
@@ -42,10 +43,12 @@ public class SceneChange : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     void Update()
     {
+        //ゲーム終了表示
         if(wasFinished)
         {
             TMP.text = "Spaceを押すと\nタイトルに戻ります";
         }
+
         if (Input.GetKey(KeyCode.Space))
         {
             if (isFirst)

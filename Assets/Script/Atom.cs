@@ -103,15 +103,4 @@ public class Atom : MonoBehaviour
             {90,"オガネソン"}
         };
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void AtomIndex(int num)
-    {
-        
-    }
 }

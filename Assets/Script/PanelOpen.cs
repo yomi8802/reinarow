@@ -17,13 +17,14 @@ public class PanelOpen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerEnter(PointerEventData eventdata)
     {
+        //optionパネルの色変更
         if(isImage)
         {
             this.gameObject.GetComponent<Image>().color = Color.green;
         }
         else if(isCloseButton)
         {
-                this.gameObject.GetComponent<Image>().color = Color.red;        
+            this.gameObject.GetComponent<Image>().color = Color.red;        
         }
         else
         {
@@ -36,21 +37,23 @@ public class PanelOpen : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         ButtonReset();
     }
 
+    //パネル送り設定
     public void OnPointerClick(PointerEventData eventdata)
     {
         if(!isFirstPanel)
         {
             Audio.PlayOneShot(Click);
-            NextPanel.SetActive(true);
+            NextPanel.SetActive(true); //パネル表示
         }
-        if(isPanel || isCloseButton)
+        if(isCloseButton) 
         {
             ButtonReset();
             Audio.PlayOneShot(Click);
-            NowPanel.SetActive(false);
+            NowPanel.SetActive(false); //今開いているパネルを非表示
         }
     }
 
+    //ボタン色初期化
     void ButtonReset()
     {
         if(isImage || isCloseButton)

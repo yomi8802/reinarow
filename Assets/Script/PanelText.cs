@@ -6,42 +6,38 @@ using TMPro;
 public class PanelText : MonoBehaviour
 {
     public AtomIndex AI; 
-    public TextMeshPro TMP;
-    public bool numText = false;
-    public bool nameText = false;
+    public TextMeshPro numText;
+    public TextMeshPro nameText;
     bool isShow = false;
 
     void Update()
     {
-        if(!isShow && AI.isPutted)
+        if(!isShow && AI.isPutted) //設置されているとき
         {
-            if(numText)
-            {
+                //原子番号設定
                 if(AI.num <= 56)
                 {
-                    TMP.text = AI.num.ToString();
+                    numText.text = AI.num.ToString();
                 }
                 else if(AI.num == 57)
                 {
-                    TMP.text = "57～71";
+                    numText.text = "57～71";
                 }
                 else if(AI.num <= 74)
                 {
-                    TMP.text = (AI.num + 14).ToString();
+                    numText.text = (AI.num + 14).ToString();
                 }
                 else if(AI.num == 75)
                 {
-                    TMP.text = "89～103";
+                    numText.text = "89～103";
                 }
                 else
                 {
-                    TMP.text = (AI.num + 28).ToString();
+                    numText.text = (AI.num + 28).ToString();
                 }
-            }
-            if(nameText)
-            {
-                TMP.text = AI.Name;
-            }
+
+                //元素名設定
+                nameText.text = AI.Name;
         }
     }
 }

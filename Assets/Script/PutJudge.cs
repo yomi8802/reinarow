@@ -7,13 +7,13 @@ public class PutJudge : MonoBehaviour
     public AtomIndex AI;
     public MakeTable MT;
 
-    // Start is called before the first frame update
     void Start()
     {
         MT = GameObject.Find("Manager").GetComponent<MakeTable>();
     }
 
-    // Update is called once per frame
+    //設置可能判定
+    //上下左右が設置されているかしらみつぶしに
     void Update()
     {
         if(!AI.canPut)

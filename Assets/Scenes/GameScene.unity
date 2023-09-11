@@ -676,7 +676,6 @@ MonoBehaviour:
   AtomList: 
   pNum: 4
   cNum: 
-  test: 
 --- !u!114 &216326597
 MonoBehaviour:
   m_ObjectHideFlags: 0
